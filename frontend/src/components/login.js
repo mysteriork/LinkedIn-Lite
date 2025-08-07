@@ -15,7 +15,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://minilinkedin-lite.onrender.com/login", form);
+      const res = await axios.post("https://linkedin-lite-t1zn.onrender.com/login", form);
       const user = res.data.user;
       alert("login successfull");
 

@@ -17,7 +17,7 @@ function Home() {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://minilinkedin-lite.onrender.com/user", {
+      await axios.post("https://linkedin-lite-t1zn.onrender.com/user", {
         user: name.firstname,
         text: text,
       });
@@ -31,7 +31,7 @@ function Home() {
 
   const showData = () => {
     axios
-      .get("https://minilinkedin-lite.onrender.com/user/data")
+      .get("https://linkedin-lite-t1zn.onrender.com/user/data")
       .then((res) => {
         setDetails(res.data.data);
       })

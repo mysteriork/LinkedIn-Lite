@@ -22,7 +22,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      await axios.post("https://minilinkedin-lite.onrender.com/register", form);
+      await axios.post("https://linkedin-lite-t1zn.onrender.com/register", form);
       alert("Registered ! Please login...");
       navigate("/login");
     } catch (err) {
