@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../web.css"
+import "../web.css";
 
 export default function Register() {
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
     email: "",
+    username: "",
     password: "",
     bio: "",
   });
@@ -22,7 +23,10 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      await axios.post("https://linkedin-lite-t1zn.onrender.com/register", form);
+      await axios.post(
+        "https://linkedin-lite-t1zn.onrender.com/register",
+        form
+      );
       alert("Registered ! Please login...");
       navigate("/login");
     } catch (err) {
@@ -55,6 +59,13 @@ export default function Register() {
           required
         />
         <input
+          name="username"
+          type="text"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+        />
+        <input
           name="password"
           type="password"
           placeholder="Password"
@@ -66,14 +77,23 @@ export default function Register() {
           placeholder="bio"
           onChange={handleChange}
         ></textarea>
-        <button type="submit" className="btn3">Register</button>
+        <button type="submit" className="btn3">
+          Register
+        </button>
       </form>
-      <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"10px"}}>
-        <p style={{color:"green"}}>Already registered ? Then Login here </p>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        <p style={{ color: "green" }}>Already registered ? Then Login here </p>
         <button
           onClick={() => {
             navigate("/login");
-          } }
+          }}
           className="btn4"
         >
           login

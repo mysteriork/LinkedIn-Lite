@@ -17,8 +17,6 @@ mongoose
   )
   .catch((err) => console.error(err));
 
-
-
 app.post("/register", async (req, res) => {
   const { password } = req.body;
   try {
@@ -32,9 +30,9 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -62,25 +60,21 @@ app.get("/user/data", async (req, res) => {
   }
 });
 
-app.post("/user/profile",async (req, res) => {
-
+app.post("/user/profile", async (req, res) => {
   try {
-    const {firstname}=req.body
-    const profileData = await User.findOne({firstname:firstname});
+    const { firstname } = req.body;
+    const profileData = await User.findOne({ firstname: firstname });
     res.json(profileData);
-
   } catch (error) {
-    console.log('profile data error at backend',error.message);
-    
+    console.log("profile data error at backend", error.message);
   }
 });
 
 app.post("/user", async (req, res) => {
-
   try {
-    const {text,user}=req.body
-    
-    const newdata = new homeDatabase({post:text,user:user});
+    const { text, user } = req.body;
+
+    const newdata = new homeDatabase({ post: text, user: user });
     await newdata.save();
     res
       .status(201)
@@ -92,4 +86,3 @@ app.post("/user", async (req, res) => {
       .send({ msg: "Error fetching data at backend", status: false });
   }
 });
-

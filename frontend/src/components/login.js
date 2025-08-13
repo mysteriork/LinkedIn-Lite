@@ -4,8 +4,7 @@ import axios from "axios";
 import "../web.css";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [names, setNames] = useState(null);
+  const [form, setForm] = useState({ username: "", password: "" });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,7 +14,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://linkedin-lite-t1zn.onrender.com/login", form);
+      const res = await axios.post(
+        "https://linkedin-lite-t1zn.onrender.com/login",
+        form
+      );
       const user = res.data.user;
       alert("login successfull");
 
@@ -29,9 +31,9 @@ export default function Login() {
     <form onSubmit={handleSubmit} className="login flex container1">
       <h1>Login</h1>
       <input
-        name="email"
-        type="email"
-        placeholder="Email"
+        name="username"
+        type="text"
+        placeholder="Username"
         onChange={handleChange}
         required
       />
