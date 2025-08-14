@@ -12,7 +12,9 @@ function Profile() {
 
   const profilePic = (name) => {
     axios
-      .post("https://linkedin-lite-t1zn.onrender.com/user/profile", { firstname: name })
+      .post("https://linkedin-lite-t1zn.onrender.com/user/profile", {
+        firstname: name,
+      })
       .then((result) => {
         setProfile(result.data);
         setSelectedUser(name);
@@ -28,7 +30,6 @@ function Profile() {
 
   return (
     <div>
-      
       <div className="profile container1">
         {selectedUser === profilename && profile && (
           <div className="profilepic">
@@ -58,4 +59,3 @@ function Profile() {
 }
 
 export default Profile;
-

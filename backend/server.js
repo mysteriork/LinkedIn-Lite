@@ -3,19 +3,34 @@ const mongoose = require("mongoose");
 const User = require("./models/user");
 const homeDatabase = require("./models/home");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const cloud = require("./cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cors = require("cors");
 require("dotenv").config();
-
+connection();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() =>
-    app.listen(5000, () => console.log("Server running on port 5000"))
-  )
-  .catch((err) => console.error(err));
+const storage = new CloudinaryStorage({
+  cloudinary: cloud,
+  params: {
+    folder: "linkedinLite_posts",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+  },
+});
+
+const upload = multer({ storage });
+
+async function connection() {
+  await mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() =>
+      app.listen(5000, () => console.log("Server running on port 5000"))
+    )
+    .catch((err) => console.error(err));
+}
 
 app.post("/register", async (req, res) => {
   const { password } = req.body;
@@ -49,6 +64,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.delete("/delete/:id", async(req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await homeDatabase.findByIdAndDelete(id);
+    res.status(200).send({ message: "data deleted", data: deleted });
+  } catch (error) {
+    res.status(500).send("error in deleting database at server");
+  }
+});
 app.get("/user/data", async (req, res) => {
   try {
     const matched = await homeDatabase.find();
@@ -70,11 +95,16 @@ app.post("/user/profile", async (req, res) => {
   }
 });
 
-app.post("/user", async (req, res) => {
+app.post("/user", upload.single("image"), async (req, res) => {
   try {
-    const { text, user } = req.body;
+    const { text } = req.body;
+    const imageUrl = req.file ? req.file.path : null;
 
-    const newdata = new homeDatabase({ post: text, user: user });
+    const newdata = new homeDatabase({
+      ...req.body,
+      post: text,
+      image: imageUrl,
+    });
     await newdata.save();
     res
       .status(201)

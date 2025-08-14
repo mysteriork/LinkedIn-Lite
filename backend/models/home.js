@@ -4,11 +4,18 @@ const database = new mongoose.Schema(
   {
     post: {
       type: String,
-      required: true
+      required: true,
     },
-    user:{
-      type:String,
-    }
+    user: {
+      type: String,
+    },
+    userId: {
+      type: String,
+    },
+    image: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -16,4 +23,3 @@ const database = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("profilePost", database);
-

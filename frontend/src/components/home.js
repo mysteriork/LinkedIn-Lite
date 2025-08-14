@@ -1,9 +1,10 @@
 import React from "react";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../web.css";
 import { useLocation } from "react-router-dom";
 import company from "../components/images/companyTag.png";
+import plus from "../components/images/plus.png";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -13,25 +14,63 @@ function Home() {
 
   const [text, setText] = useState("");
   const [details, setDetails] = useState([]);
+  const [image, setImage] = useState(null);
 
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    if (file) setImage(file);
+  };
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://linkedin-lite-t1zn.onrender.com/user", {
-        user: name.firstname,
-        text: text,
-      });
-      alert("Post has Created !!!");
-      setText("");
-      showData();
+      if (image) {
+        const formData = new FormData();
+        formData.append("user", name.firstname);
+        formData.append("text", text);
+        formData.append("userId", name._id);
+        formData.append("image", image);
+
+        await axios.post(
+          "https://linkedin-lite-t1zn.onrender.com/user",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        alert("Post has Created !!!");
+        setText("");
+        setImage(null);
+        showData();
+      } else {
+        await axios.post(
+          "https://linkedin-lite-t1zn.onrender.com/user",
+          { user: name.firstname, text: text,userId:name._id }
+        );
+        alert("Post has Created !!!");
+        setText("");
+        setImage(null);
+        showData();
+      }
     } catch (error) {
       console.log("error sending data on client side", error.message);
     }
   };
 
+  const deletepost = (id) => {
+    axios
+      .delete(`https://linkedin-lite-t1zn.onrender.com/delete/${id}`)
+      .then((result) => {
+        alert("post deleted");
+        console.log("deleted", result);
+        showData();
+      })
+      .catch((err) => {
+        console.log("error deleting photo", err);
+      });
+  };
   const showData = () => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/user/data")
+      .get( "https://linkedin-lite-t1zn.onrender.com/user/data")
       .then((res) => {
         setDetails(res.data.data);
       })
@@ -95,18 +134,36 @@ function Home() {
       </nav>
 
       <div className="contain container1">
-        <form className="listForm flex container1">
-          <input
-            className="homePost"
-            type="text"
-            name="text"
-            placeholder="Write a Post . . ."
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-          />
-          <button className="btn" onClick={submitForm}>
+        <form className="listForm flex container1" onSubmit={submitForm}>
+          <section className="homePost">
+            <input
+              className="homePostt"
+              type="text"
+              name="text"
+              placeholder="Write a Post . . ."
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+            />
+            <div className="imgcontainer">
+              <span className="file-upload">
+                {image ? image.name : "Upload pic"}
+              </span>
+              <label htmlFor="fileupload">
+                <img src={plus} alt="plusSign" className="plusimg" />
+              </label>
+              <input
+                id="fileupload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleImage}
+              />
+            </div>
+          </section>
+
+          <button type="submit" className="btn">
             POST
           </button>
           <br />
@@ -117,19 +174,38 @@ function Home() {
             {details.map((value) => (
               <div className="container2" key={value._id}>
                 <div>
-                  <a
-                    style={{ cursor: "pointer" }}
-                    className="click"
-                    onClick={() => {
-                      profilePic(value.user);
-                    }}
-                  >
-                    {value.user}
-                  </a>
+                  <div>
+                    <a
+                      style={{ cursor: "pointer" }}
+                      className="click"
+                      onClick={() => {
+                        profilePic(value.user);
+                      }}
+                    >
+                      {value.user}
+                    </a>
+                  </div>
+                  <h2>{value.post}</h2>
+                  {value.image && (
+                    <div>
+                      <img
+                        src={value.image}
+                        alt="imgPost"
+                        className="imgpost"
+                      />
+                    </div>
+                  )}
+                  <h5>{new Date(value.createdAt).toLocaleString()}</h5>
                 </div>
 
-                <h2>{value.post}</h2>
-                <h5>{new Date(value.createdAt).toLocaleString()}</h5>
+                {value.userId === name?._id && (
+                  <button
+                    className="deletebtn"
+                    onClick={() => deletepost(value._id)}
+                  >
+                    delete post
+                  </button>
+                )}
               </div>
             ))}
           </div>

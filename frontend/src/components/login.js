@@ -20,6 +20,7 @@ export default function Login() {
       );
       const user = res.data.user;
       alert("login successfull");
+      console.log(user);
 
       navigate("/home", { state: { name: user } });
     } catch {
