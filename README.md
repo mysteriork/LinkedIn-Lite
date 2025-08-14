@@ -1,4 +1,4 @@
-## WE ARE LIVE ON --  https://linkedin-lite-virid.vercel.app/
+ ## WE ARE LIVE ON --  https://linkedin-lite-virid.vercel.app/
 
 # LinkedIn Lite 💼
 
@@ -13,7 +13,7 @@ It supports user authentication, profile management, posts feed, and basic socia
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB Atlas
 - **Authentication**: JWT (JSON Web Token)
-- **Deployment**: Netlify (Frontend), Render or Railway (Backend)
+- **Deployment**: Vercel (Frontend) , Render
 
 ---
 
@@ -25,8 +25,6 @@ It supports user authentication, profile management, posts feed, and basic socia
 - 📃 Newsfeed showing user posts
 - 💡 Responsive UI
 - ⚙️ Connected to MongoDB Atlas
-- 🌐 Deployed on Netlify + Render/Railway
-
 ---
 
 ## 📁 Folder Structure
@@ -45,5 +43,6 @@ USER INTERFACE HOME PAGE :
 License
 
 This project is open-source and available under the MIT License.
+
 
 
