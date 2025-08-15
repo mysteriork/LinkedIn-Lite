@@ -30,19 +30,27 @@ It supports user authentication, profile management, posts feed, and basic socia
 ## 📁 Folder Structure
 
 USER REGISTRATION :
-<img width="1804" height="999" alt="Screenshot 2025-08-07 112628" src="https://github.com/user-attachments/assets/0e15c995-d1ae-460b-8c75-de4cceed22f5" />
+<img width="1861" height="1017" alt="image" src="https://github.com/user-attachments/assets/6eb85986-da4e-42b1-aed0-f5bd8b6fe1d3" />
+2) 
+<img width="1798" height="892" alt="Screenshot 2025-08-15 163954" src="https://github.com/user-attachments/assets/d5fd7282-cad9-4c79-b793-bd124c21d603" />
+
 
 USER LOGIN PAGE :
-<img width="1794" height="994" alt="Screenshot 2025-08-07 112655" src="https://github.com/user-attachments/assets/6ae90e81-1400-49a3-b9e2-44f14f11dd10" />
+<img width="1852" height="925" alt="Screenshot 2025-08-15 164034" src="https://github.com/user-attachments/assets/bc0e473c-33fb-4893-a878-031962b18998" />
 
 USER INTERFACE HOME PAGE :
-<img width="1920" height="1763" alt="image" src="https://github.com/user-attachments/assets/c58c7e81-435d-41ac-b885-914cedef11fe" />
+<img width="1920" height="1726" alt="image" src="https://github.com/user-attachments/assets/d88d42f8-dc60-4a82-b905-d27c61249280" />
+
+PROFILE VIEW :
+<img width="1640" height="854" alt="Screenshot 2025-08-15 164253" src="https://github.com/user-attachments/assets/64a35ae5-9aef-4c01-8e68-75c578002533" />
+
 
  @Mysteriork --- RACHIT KUMAR
 
 License
 
 This project is open-source and available under the MIT License.
+
 
 
 
