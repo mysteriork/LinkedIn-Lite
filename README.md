@@ -36,13 +36,14 @@ USER LOGIN PAGE :
 <img width="1794" height="994" alt="Screenshot 2025-08-07 112655" src="https://github.com/user-attachments/assets/6ae90e81-1400-49a3-b9e2-44f14f11dd10" />
 
 USER INTERFACE HOME PAGE :
-<img width="1817" height="997" alt="Screenshot 2025-08-07 112713" src="https://github.com/user-attachments/assets/3525fb08-5989-4c9c-906f-6d6ac415b660" />
+<img width="1920" height="1763" alt="image" src="https://github.com/user-attachments/assets/c58c7e81-435d-41ac-b885-914cedef11fe" />
 
  @Mysteriork --- RACHIT KUMAR
 
 License
 
 This project is open-source and available under the MIT License.
+
 
 
 
