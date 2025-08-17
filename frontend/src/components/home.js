@@ -5,6 +5,7 @@ import "../web.css";
 import { useLocation } from "react-router-dom";
 import company from "../components/images/companyTag.png";
 import plus from "../components/images/plus.png";
+import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -15,6 +16,7 @@ function Home() {
   const [text, setText] = useState("");
   const [details, setDetails] = useState([]);
   const [image, setImage] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -22,6 +24,7 @@ function Home() {
   };
   const submitForm = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       if (image) {
         const formData = new FormData();
@@ -32,20 +35,18 @@ function Home() {
 
         await axios.post(
           "https://linkedin-lite-t1zn.onrender.com/user",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
+          formData
         );
         alert("Post has Created !!!");
         setText("");
         setImage(null);
         showData();
       } else {
-        await axios.post(
-          "https://linkedin-lite-t1zn.onrender.com/user",
-          { user: name.firstname, text: text,userId:name._id }
-        );
+        await axios.post("https://linkedin-lite-t1zn.onrender.com/user", {
+          user: name.firstname,
+          text: text,
+          userId: name._id,
+        });
         alert("Post has Created !!!");
         setText("");
         setImage(null);
@@ -53,24 +54,28 @@ function Home() {
       }
     } catch (error) {
       console.log("error sending data on client side", error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
   const deletepost = (id) => {
-    axios
-      .delete(`https://linkedin-lite-t1zn.onrender.com/delete/${id}`)
-      .then((result) => {
-        alert("post deleted");
-        console.log("deleted", result);
-        showData();
-      })
-      .catch((err) => {
-        console.log("error deleting photo", err);
-      });
+    const confirm = window.confirm("Are you sure , you want to delete this ?");
+    if (confirm) {
+      axios
+        .delete(`https://linkedin-lite-t1zn.onrender.com/delete/${id}`)
+        .then((result) => {
+          alert("Post deleted !!!");
+          showData();
+        })
+        .catch((err) => {
+          alert("Error Deleting Post !");
+        });
+    }
   };
   const showData = () => {
     axios
-      .get( "https://linkedin-lite-t1zn.onrender.com/user/data")
+      .get("https://linkedin-lite-t1zn.onrender.com/user/data")
       .then((res) => {
         setDetails(res.data.data);
       })
@@ -167,6 +172,7 @@ function Home() {
             POST
           </button>
           <br />
+          {loader && <Loader/>}
         </form>
 
         <div className="answersMain">

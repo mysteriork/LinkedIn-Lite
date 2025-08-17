@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "./loader";
 import "../web.css";
 
 export default function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,6 +15,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(
         "https://linkedin-lite-t1zn.onrender.com/login",
@@ -25,29 +28,36 @@ export default function Login() {
       navigate("/home", { state: { name: user } });
     } catch {
       alert("Invalid login credentials");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login flex container1">
-      <h1>Login</h1>
-      <input
-        name="username"
-        type="text"
-        placeholder="Username"
-        onChange={handleChange}
-        required
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        onChange={handleChange}
-        required
-      />
-      <button type="submit" className="btn3">
-        Login
-      </button>
-    </form>
+    <div>
+      {" "}
+      <form onSubmit={handleSubmit} className="login flex container1">
+        <h1>Login</h1>
+        <input
+          name="username"
+          type="text"
+          placeholder="Username"
+          onChange={handleChange}
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <button type="submit" className="btn3">
+          Login
+        </button>
+        {loading && <Loader />}
+      </form>
+      
+    </div>
   );
 }

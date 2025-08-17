@@ -64,7 +64,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.delete("/delete/:id", async(req, res) => {
+app.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -96,6 +96,9 @@ app.post("/user/profile", async (req, res) => {
 });
 
 app.post("/user", upload.single("image"), async (req, res) => {
+  console.log(req.file);
+  console.log(req.body);
+
   try {
     const { text } = req.body;
     const imageUrl = req.file ? req.file.path : null;

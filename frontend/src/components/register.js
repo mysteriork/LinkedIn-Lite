@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "./loader";
 import "../web.css";
 
 export default function Register() {
@@ -12,6 +13,7 @@ export default function Register() {
     password: "",
     bio: "",
   });
+  const [loading,setLoading]=useState(false)
 
   const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     try {
       await axios.post(
@@ -31,6 +34,8 @@ export default function Register() {
       navigate("/login");
     } catch (err) {
       alert("Error registering. check CREDENTIALS .");
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -80,6 +85,7 @@ export default function Register() {
         <button type="submit" className="btn3">
           Register
         </button>
+        {loading && <Loader/>}
       </form>
       <div
         style={{
