@@ -8,7 +8,6 @@ const cloud = require("./cloudinary");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cors = require("cors");
 require("dotenv").config();
-connection();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -31,6 +30,7 @@ async function connection() {
     )
     .catch((err) => console.error(err));
 }
+connection();
 
 app.post("/register", async (req, res) => {
   const { password } = req.body;
