@@ -12,7 +12,7 @@ function Profile() {
 
   const profilePic = (name) => {
     axios
-      .post("https://linkedin-lite-t1zn.onrender.com/user/profile", {
+      .post("https://linkedin-lite-t1zn.onrender.com/api/posts/profile", {
         firstname: name,
       })
       .then((result) => {

@@ -27,13 +27,17 @@ export default function Register() {
 
     try {
       await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/register",
+        "https://linkedin-lite-t1zn.onrender.com/api/auth/register",
         form
       );
+      console.log("Registered successfully");
+      
       alert("Registered ! Please login...");
       navigate("/login");
     } catch (err) {
       alert("Error registering. check CREDENTIALS .");
+      console.log("error registering");
+      
     }finally{
       setLoading(false)
     }

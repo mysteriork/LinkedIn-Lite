@@ -34,7 +34,7 @@ function Home() {
         formData.append("image", image);
 
         await axios.post(
-          "https://linkedin-lite-t1zn.onrender.com/user",
+          "https://linkedin-lite-t1zn.onrender.com/api/posts/user",
           formData
         );
         alert("Post has Created !!!");
@@ -42,7 +42,7 @@ function Home() {
         setImage(null);
         showData();
       } else {
-        await axios.post("https://linkedin-lite-t1zn.onrender.com/user", {
+        await axios.post("https://linkedin-lite-t1zn.onrender.com/api/posts/user", {
           user: name.firstname,
           text: text,
           userId: name._id,
@@ -63,7 +63,7 @@ function Home() {
     const confirm = window.confirm("Are you sure , you want to delete this ?");
     if (confirm) {
       axios
-        .delete(`https://linkedin-lite-t1zn.onrender.com/delete/${id}`)
+        .delete(`https://linkedin-lite-t1zn.onrender.com/api/posts/delete/${id}`)
         .then((result) => {
           alert("Post deleted !!!");
           showData();
@@ -75,7 +75,7 @@ function Home() {
   };
   const showData = () => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/user/data")
+      .get("https://linkedin-lite-t1zn.onrender.com/api/posts")
       .then((res) => {
         setDetails(res.data.data);
       })
