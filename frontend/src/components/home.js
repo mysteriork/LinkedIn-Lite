@@ -42,11 +42,14 @@ function Home() {
         setImage(null);
         showData();
       } else {
-        await axios.post("https://linkedin-lite-t1zn.onrender.com/api/posts/user", {
-          user: name.firstname,
-          text: text,
-          userId: name._id,
-        });
+        await axios.post(
+          "https://linkedin-lite-t1zn.onrender.com/api/posts/user",
+          {
+            user: name.firstname,
+            text: text,
+            userId: name._id,
+          }
+        );
         alert("Post has Created !!!");
         setText("");
         setImage(null);
@@ -63,7 +66,9 @@ function Home() {
     const confirm = window.confirm("Are you sure , you want to delete this ?");
     if (confirm) {
       axios
-        .delete(`https://linkedin-lite-t1zn.onrender.com/api/posts/delete/${id}`)
+        .delete(
+          `https://linkedin-lite-t1zn.onrender.com/api/posts/delete/${id}`
+        )
         .then((result) => {
           alert("Post deleted !!!");
           showData();
@@ -146,6 +151,7 @@ function Home() {
               type="text"
               name="text"
               placeholder="Write a Post . . ."
+              autoComplete="off"
               value={text}
               onChange={(e) => {
                 setText(e.target.value);
@@ -172,8 +178,8 @@ function Home() {
             POST
           </button>
           <br />
-          {loader && <Loader/>}
         </form>
+        <div style={{marginInline:"auto"}}> {loader && <Loader />}</div>
 
         <div className="answersMain">
           <div className="answers">

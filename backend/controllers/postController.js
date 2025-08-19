@@ -1,4 +1,5 @@
 const Post = require("../models/home");
+const User=require("../models/user")
 
 exports.createPost = async (req, res) => {
   try {
@@ -15,8 +16,9 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getProfile = async (req, res) => {
+
   try {
-    const { firstname } = req.body;
+    const { firstname } = req.query;
     const profileData = await User.findOne({ firstname: firstname });
     res.json(profileData);
   } catch (error) {
