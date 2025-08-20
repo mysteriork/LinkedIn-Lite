@@ -1,9 +1,9 @@
-import React, { use, useRef } from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../web.css";
 import { useLocation } from "react-router-dom";
-import company from "../components/images/companyTag.png";
+import company from "../components/images/lin1.png";
 import plus from "../components/images/plus.png";
 import send from "../components/images/send.png";
 import Loader from "./loader";
@@ -21,6 +21,13 @@ function Home() {
   const [replies, setReplies] = useState({});
   const [postt, setPostt] = useState([]);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // your navigate hook is already defined above
+  const logout = () => {
+    navigate("/"); // or clear localStorage/session before
+  };
+
   const handleReplyChange = (postId, value) => {
     setReplies((prev) => ({ ...prev, [postId]: value }));
   };
@@ -34,8 +41,8 @@ function Home() {
         "https://linkedin-lite-t1zn.onrender.com/api/posts/cmt",
         { postId, userId: name._id, reply: replyText, name: name.firstname }
       );
-      showReply();
       setReplies((prev) => ({ ...prev, [postId]: "" }));
+      showReply();
     } catch (error) {
       console.log("error sending reply", error);
     }
@@ -105,9 +112,7 @@ function Home() {
   };
   const showData = () => {
     axios
-      .get(
-        "https://linkedin-lite-t1zn.onrender.com/api/posts"
-      )
+      .get("https://linkedin-lite-t1zn.onrender.com/api/posts")
       .then((res) => {
         setDetails(res.data.data);
       })
@@ -116,9 +121,7 @@ function Home() {
 
   const showReply = () => {
     axios
-      .get(
-        "https://linkedin-lite-t1zn.onrender.com/api/posts"
-      )
+      .get("https://linkedin-lite-t1zn.onrender.com/api/posts/cmt")
       .then((res) => {
         setPostt(res.data);
       })
@@ -138,7 +141,16 @@ function Home() {
       <nav className="navbar1 flex">
         <a href="/home" className="imagesection">
           <img src={company} className="nav-img" alt="/" />
-          <label style={{ color: "white" }}>LinkedIn Lite</label>
+          <label
+            style={{
+              color: "white",
+              fontSize: "large",
+              fontWeight: "600",
+              fontFamily: "calibri",
+            }}
+          >
+            LinkedIn Lite
+          </label>
         </a>
         <button
           className="btn2"
@@ -160,10 +172,23 @@ function Home() {
               User's Profile
             </strong>
             {name ? (
-              <a
-                className="bttn2"
-                onClick={() => profilePic(name.firstname)}
-              >{`${name?.firstname} ${name?.lastname}`}</a>
+              <a className="bttn2" onClick={() => setMenuOpen((prev) => !prev)}>
+                {`${name?.firstname} ${name?.lastname}`}
+
+                {menuOpen && (
+                  <div className="dropdown">
+                    <button
+                      className="drop-item"
+                      onClick={() => profilePic(name.firstname)}
+                    >
+                      Profile
+                    </button>
+                    <button className="drop-item" onClick={logout}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </a>
             ) : (
               <div>
                 <li
@@ -246,20 +271,22 @@ function Home() {
                       />
                     </div>
                   )}
-                  <h5 >{new Date(value.createdAt).toLocaleString()}</h5>
+                  <h5>{new Date(value.createdAt).toLocaleString()}</h5>
                   <h5 className="replyInp" style={{ color: "goldenrod" }}>
                     comments
                   </h5>
-                  <div className="replybox" >
-                    {postt.length>0 && postt.map(
-                      (valuee) =>
-                        value._id === valuee.postId && (
-                          <p
-                            className="replies"
-                            key={valuee._id}
-                          >{`${valuee.name} : ${valuee.reply}`}</p>
-                        )
-                    )}
+                  <div className="replybox">
+                    {postt &&
+                      postt.length > 0 &&
+                      postt.map(
+                        (valuee) =>
+                          value._id === valuee.postId && (
+                            <p
+                              className="replies"
+                              key={valuee._id}
+                            >{`${valuee.name} -- ${valuee.reply}`}</p>
+                          )
+                      )}
                   </div>
 
                   <div>
