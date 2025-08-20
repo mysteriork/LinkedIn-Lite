@@ -117,7 +117,7 @@ function Home() {
   const showReply = () => {
     axios
       .get(
-        "https://linkedin-lite-t1zn.onrender.com/api/posts"
+        "https://linkedin-lite-t1zn.onrender.com/api/posts/cmt"
       )
       .then((res) => {
         setPostt(res.data);
