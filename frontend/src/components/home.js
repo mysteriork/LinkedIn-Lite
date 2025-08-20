@@ -251,7 +251,7 @@ function Home() {
                     comments
                   </h5>
                   <div className="replybox" >
-                    {postt.map(
+                    {postt.length>0 && postt.map(
                       (valuee) =>
                         value._id === valuee.postId && (
                           <p
