@@ -18,7 +18,8 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/login",
+        "https://linkedin-lite-t1zn.onrender.com/api/auth/login"
+        ,
         form
       );
       const user = res.data.user;
@@ -55,6 +56,7 @@ export default function Login() {
         <button type="submit" className="btn3">
           Login
         </button>
+        <button onClick={()=>navigate("/")} className="btn4">Register</button>
         {loading && <Loader />}
       </form>
       

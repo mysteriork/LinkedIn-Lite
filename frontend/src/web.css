@@ -70,7 +70,7 @@ a {
 }
 .click {
   color: var(--primary-text-color);
-  font-size: x-large;
+  font-size: xx-large;
   font-weight: 600;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
@@ -178,7 +178,7 @@ li {
   width: 80px;
   opacity: 0.8;
   filter: grayscale(50%);
-  transition:opacity .2s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 .plusimg:hover {
   cursor: pointer;
@@ -284,6 +284,53 @@ li {
   border-bottom: none;
 }
 
+.replybox {
+  padding-top: 3px;
+  max-height: 80px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+.replies {
+  font-size: small;
+  font-weight: 600;
+  padding: 5px;
+  background-color: #eeeeeeab;
+  font-family: monospace;
+  letter-spacing: 2px;
+  color: rgb(248, 75, 75);
+}
+.replyInp1 {
+  height: 30px;
+  color: #777;
+  font-size: medium;
+  font-weight: 600;
+  font-family: monospace;
+  border: none;
+  width: 200px;
+  text-indent: 5px;
+}
+.replyInp1:focus {
+  outline: none;
+  color: rgb(73, 73, 73);
+}
+.replyBtn {
+  height: 12px;
+  width: 15px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+.replyBtn:hover {
+  opacity: 1;
+}
+.replyBtn:hover {
+  cursor: pointer;
+}
+.replyInp {
+  padding-top: 5px;
+}
 /* SIGN UP */
 
 .signup {
@@ -462,6 +509,9 @@ li {
     padding: 10px;
   }
 
+  .profilepic p{
+    font-size: medium;
+  }
   .imgpost {
     height: 150px;
     width: 200px;

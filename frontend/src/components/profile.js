@@ -12,7 +12,9 @@ function Profile() {
 
   const profilePic = (name) => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/api/posts/profile", {
+      .get(
+        "https://linkedin-lite-t1zn.onrender.com/api/posts/profile"
+        , {
         params: {
           firstname: name,
         },

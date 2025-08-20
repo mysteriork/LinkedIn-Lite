@@ -27,7 +27,8 @@ export default function Register() {
 
     try {
       await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/register",
+        "https://linkedin-lite-t1zn.onrender.com/api/auth/register"
+        ,
         form
       );
       console.log("Registered successfully");

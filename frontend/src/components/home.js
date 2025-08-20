@@ -1,10 +1,11 @@
-import React from "react";
+import React, { use, useRef } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../web.css";
 import { useLocation } from "react-router-dom";
 import company from "../components/images/companyTag.png";
 import plus from "../components/images/plus.png";
+import send from "../components/images/send.png";
 import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +18,28 @@ function Home() {
   const [details, setDetails] = useState([]);
   const [image, setImage] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [replies, setReplies] = useState({});
+  const [postt, setPostt] = useState([]);
+
+  const handleReplyChange = (postId, value) => {
+    setReplies((prev) => ({ ...prev, [postId]: value }));
+  };
+
+  const sendReply = async (postId) => {
+    const replyText = replies[postId]?.trim();
+    if (!replyText) return;
+
+    try {
+      const reply = await axios.post(
+        "https://linkedin-lite-t1zn.onrender.com/api/posts/cmt",
+        { postId, userId: name._id, reply: replyText, name: name.firstname }
+      );
+      showReply();
+      setReplies((prev) => ({ ...prev, [postId]: "" }));
+    } catch (error) {
+      console.log("error sending reply", error);
+    }
+  };
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -41,6 +64,7 @@ function Home() {
         setText("");
         setImage(null);
         showData();
+        showReply();
       } else {
         await axios.post(
           "https://linkedin-lite-t1zn.onrender.com/api/posts/user",
@@ -54,6 +78,7 @@ function Home() {
         setText("");
         setImage(null);
         showData();
+        showReply();
       }
     } catch (error) {
       console.log("error sending data on client side", error.message);
@@ -80,15 +105,29 @@ function Home() {
   };
   const showData = () => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/api/posts")
+      .get(
+        "https://linkedin-lite-t1zn.onrender.com/api/posts"
+      )
       .then((res) => {
         setDetails(res.data.data);
       })
       .catch((err) => console.log("data not fetched", err.message));
   };
 
+  const showReply = () => {
+    axios
+      .get(
+        "https://linkedin-lite-t1zn.onrender.com/api/posts"
+      )
+      .then((res) => {
+        setPostt(res.data);
+      })
+      .catch((err) => console.log("replies not fetched", err.message));
+  };
+
   useEffect(() => {
     showData();
+    showReply();
   }, []);
 
   const profilePic = (namee) => {
@@ -179,14 +218,14 @@ function Home() {
           </button>
           <br />
         </form>
-        <div style={{marginInline:"auto"}}> {loader && <Loader />}</div>
+        <div style={{ marginInline: "auto" }}> {loader && <Loader />}</div>
 
         <div className="answersMain">
           <div className="answers">
             {details.map((value) => (
               <div className="container2" key={value._id}>
                 <div>
-                  <div>
+                  <div style={{ marginBottom: "5px" }}>
                     <a
                       style={{ cursor: "pointer" }}
                       className="click"
@@ -207,7 +246,43 @@ function Home() {
                       />
                     </div>
                   )}
-                  <h5>{new Date(value.createdAt).toLocaleString()}</h5>
+                  <h5 >{new Date(value.createdAt).toLocaleString()}</h5>
+                  <h5 className="replyInp" style={{ color: "goldenrod" }}>
+                    comments
+                  </h5>
+                  <div className="replybox" >
+                    {postt.map(
+                      (valuee) =>
+                        value._id === valuee.postId && (
+                          <p
+                            className="replies"
+                            key={valuee._id}
+                          >{`${valuee.name} : ${valuee.reply}`}</p>
+                        )
+                    )}
+                  </div>
+
+                  <div>
+                    <input
+                      autoComplete="off"
+                      className="replyInp1"
+                      type="text"
+                      placeholder="write a comment ..."
+                      onChange={(e) =>
+                        handleReplyChange(value._id, e.target.value)
+                      }
+                      value={replies[value._id] || ""}
+                    />
+                    <label htmlFor="replyBtn">
+                      <img
+                        src={send}
+                        alt="replybtn"
+                        className="replyBtn"
+                        onClick={() => sendReply(value._id)}
+                      />
+                    </label>
+                    <input style={{ display: "none" }} id="replyBtn" />
+                  </div>
                 </div>
 
                 {value.userId === name?._id && (
