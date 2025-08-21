@@ -3,6 +3,7 @@ import Home from './components/home';
 import Login from './components/login';
 import Register from './components/register';
 import Profile from './components/profile';
+import Reset from './components/reset';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
     </Router>
   );

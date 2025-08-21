@@ -18,14 +18,11 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/login"
-        ,
+        "https://linkedin-lite-t1zn.onrender.com/api/auth/login",
         form
       );
       const user = res.data.user;
-      alert("login successfull");
-      console.log(user);
-
+      alert("login successfull"); 
       navigate("/home", { state: { name: user } });
     } catch {
       alert("Invalid login credentials");
@@ -56,10 +53,12 @@ export default function Login() {
         <button type="submit" className="btn3">
           Login
         </button>
-        <button onClick={()=>navigate("/")} className="btn4">Register</button>
+        <button onClick={() => navigate("/")} className="btn4">
+          Register
+        </button>
+        <p className="resetBtn" onClick={() => navigate("/reset")}>Forgot password</p>
         {loading && <Loader />}
       </form>
-      
     </div>
   );
 }

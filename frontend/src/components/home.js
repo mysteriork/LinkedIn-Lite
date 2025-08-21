@@ -263,7 +263,7 @@ function Home() {
                   </div>
                   <h2>{value.post}</h2>
                   {value.image && (
-                    <div>
+                    <div className="impPost1">
                       <img
                         src={value.image}
                         alt="imgPost"
@@ -271,7 +271,9 @@ function Home() {
                       />
                     </div>
                   )}
-                  <h5>{new Date(value.createdAt).toLocaleString()}</h5>
+                  <h5 style={{ fontSize: "small" }}>
+                    {new Date(value.createdAt).toLocaleString()}
+                  </h5>
                   <h5 className="replyInp" style={{ color: "goldenrod" }}>
                     comments
                   </h5>
@@ -281,10 +283,10 @@ function Home() {
                       postt.map(
                         (valuee) =>
                           value._id === valuee.postId && (
-                            <p
-                              className="replies"
-                              key={valuee._id}
-                            >{`${valuee.name} -- ${valuee.reply}`}</p>
+                            <p className="replies" key={valuee._id}>
+                              <label className="replyTag">{`${valuee.name}:`}</label>
+                              {valuee.reply}
+                            </p>
                           )
                       )}
                   </div>

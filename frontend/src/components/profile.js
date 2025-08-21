@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import "../web.css";
 
 function Profile() {
@@ -12,9 +12,7 @@ function Profile() {
 
   const profilePic = (name) => {
     axios
-      .get(
-        "https://linkedin-lite-t1zn.onrender.com/api/posts/profile"
-        , {
+      .get("https://linkedin-lite-t1zn.onrender.com/api/posts/profile", {
         params: {
           firstname: name,
         },
@@ -34,7 +32,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="profile container1">
+      <div className="profile flex container1">
         {selectedUser === profilename && profile && (
           <div className="profilepic">
             <strong>

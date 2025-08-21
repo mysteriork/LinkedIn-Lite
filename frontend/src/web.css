@@ -251,8 +251,16 @@ li {
 }
 
 .imgpost {
+  padding: 2px;
   height: 300px;
   width: 450px;
+}
+
+.profile {
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  max-width: 500px;
 }
 
 .profile.container1 {
@@ -261,7 +269,6 @@ li {
   align-items: flex-start;
   padding: 40px 20px;
   margin-top: 80px;
-  background-color: #f9f9f9;
   min-height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -299,7 +306,7 @@ li {
 }
 
 .replybox {
-  padding-top: 3px;
+  padding-top: 5px;
   max-height: 100px;
   display: flex;
   flex-direction: column;
@@ -310,14 +317,24 @@ li {
 .replies {
   font-size: small;
   font-weight: 600;
-  padding: 2px;
-  background-color: #eeeeeec5;
+  padding: 4px;
   font-family: monospace;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: var(--accent-color);
+}
+
+.replyTag {
+  padding: 2px;
+  border-radius: 2px;
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bolder;
+  margin-right: 5px;
+  background-color: var(--accent-color);
 }
 .replyInp1 {
   height: 30px;
+  margin-top: 5px;
   color: #777;
   font-size: medium;
   font-weight: 600;
@@ -333,7 +350,7 @@ li {
 .replyBtn {
   height: 12px;
   width: 15px;
-  opacity: 0.5;
+  opacity: 0.3;
   transition: opacity 0.2s ease;
 }
 .replyBtn:hover {
@@ -445,8 +462,10 @@ li {
   background-color: rgba(23, 22, 22, 0.918);
   color: white;
   padding: 10px;
+  border-radius: 4px;
+  letter-spacing: 2px;
   font-size: medium;
-
+  border: 2px solid rgb(40, 39, 39);
   font-weight: 600;
 }
 
@@ -461,6 +480,7 @@ li {
   margin-top: 60px;
   height: 600px;
   width: 700px;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   gap: 20px;
@@ -478,6 +498,45 @@ li {
   color: var(--accent-color);
 }
 
+/* RESET PASSWORD */
+
+.reset {
+  height: 600px;
+  width: 700px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.reset > input {
+  height: 40px;
+  width: 500px;
+  text-indent: 10px;
+  border: none;
+  border-bottom: 2px solid gray;
+}
+
+.reset > input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.resetBtn {
+  position: absolute;
+  bottom: 80px;
+  right: 80px;
+}
+
+.resetBtn:hover {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+.resetBtn:active {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 1.8rem;
@@ -491,7 +550,20 @@ li {
   .dropdown {
     top: 80px;
   }
+  .reset {
+    width: 90%;
+    max-width: 100%;
+  }
+  .reset > input {
+    width: 90%;
+    max-width: 100%;
+  }
 
+  .resetBtn {
+    right: 20px;
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+  }
   .signup,
   .login,
   .signForm {
