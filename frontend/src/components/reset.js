@@ -37,7 +37,6 @@ function Reset() {
         <h1>Enter New Password</h1>
         <input
           name="newPword"
-          className=""
           type="text"
           placeholder="Username..."
           onChange={handleChange}
@@ -45,7 +44,6 @@ function Reset() {
         />
         <input
           name="password"
-          className=""
           type="text"
           placeholder="new Password..."
           onChange={handleChange}

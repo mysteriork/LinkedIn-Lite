@@ -169,7 +169,7 @@ function Home() {
                 fontFamily: "cursive",
               }}
             >
-              User's Profile
+              User Profile
             </strong>
             {name ? (
               <a className="bttn2" onClick={() => setMenuOpen((prev) => !prev)}>
@@ -258,7 +258,7 @@ function Home() {
                         profilePic(value.user);
                       }}
                     >
-                      {value.user}
+                      {`@${value.user}`}
                     </a>
                   </div>
                   <h2>{value.post}</h2>
