@@ -38,6 +38,7 @@ function Reset() {
         <input
           name="newPword"
           type="text"
+          autoComplete="off"
           placeholder="Username..."
           onChange={handleChange}
           required
@@ -45,6 +46,7 @@ function Reset() {
         <input
           name="password"
           type="text"
+          autoComplete="off"
           placeholder="new Password..."
           onChange={handleChange}
           required

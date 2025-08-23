@@ -39,6 +39,7 @@ export default function Login() {
         <input
           name="username"
           type="text"
+          autoComplete="off"
           placeholder="Username"
           onChange={handleChange}
           required

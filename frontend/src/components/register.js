@@ -51,12 +51,14 @@ export default function Register() {
         <h1>Register Yourself First</h1>
         <input
           name="firstname"
+          autoComplete="off"
           placeholder="firstName"
           onChange={handleChange}
           required
         />
         <input
           name="lastname"
+          autoComplete="off"
           placeholder="lastName"
           onChange={handleChange}
           required
@@ -71,6 +73,7 @@ export default function Register() {
         <input
           name="username"
           type="text"
+          autoComplete="off"
           placeholder="Username"
           onChange={handleChange}
           required
@@ -85,6 +88,7 @@ export default function Register() {
         <textarea
           name="bio"
           placeholder="bio"
+          autoComplete="off"
           onChange={handleChange}
         ></textarea>
         <button type="submit" className="btn3">

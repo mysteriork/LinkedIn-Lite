@@ -48,7 +48,7 @@ exports.getReply = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({createdAt:-1});
     res.json({ message: "Fetched posts", data: posts });
   } catch (err) {
     res.status(400).json({ message: "Error fetching posts" });
