@@ -27,7 +27,7 @@ export default function Register() {
 
     try {
       await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/register"
+        "https://minilinked-in.onrender.com/api/auth/register"
         ,
         form
       );

@@ -23,9 +23,8 @@ function Home() {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // your navigate hook is already defined above
   const logout = () => {
-    navigate("/"); // or clear localStorage/session before
+    navigate("/"); 
   };
 
   const handleReplyChange = (postId, value) => {
@@ -38,7 +37,7 @@ function Home() {
 
     try {
       const reply = await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/posts/cmt",
+        "https://minilinked-in.onrender.com/api/posts/cmt",
         { postId, userId: name._id, reply: replyText, name: name.firstname }
       );
       setReplies((prev) => ({ ...prev, [postId]: "" }));
@@ -64,7 +63,7 @@ function Home() {
         formData.append("image", image);
 
         await axios.post(
-          "https://linkedin-lite-t1zn.onrender.com/api/posts/user",
+          "https://minilinked-in.onrender.com/api/posts/user",
           formData
         );
         alert("Post has Created !!!");
@@ -74,7 +73,7 @@ function Home() {
         showReply();
       } else {
         await axios.post(
-          "https://linkedin-lite-t1zn.onrender.com/api/posts/user",
+          "https://minilinked-in.onrender.com/api/posts/user",
           {
             user: name.firstname,
             text: text,
@@ -99,7 +98,7 @@ function Home() {
     if (confirm) {
       axios
         .delete(
-          `https://linkedin-lite-t1zn.onrender.com/api/posts/delete/${id}`
+          `https://minilinked-in.onrender.com/api/posts/delete/${id}`
         )
         .then((result) => {
           alert("Post deleted !!!");
@@ -112,7 +111,7 @@ function Home() {
   };
   const showData = () => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/api/posts")
+      .get("https://minilinked-in.onrender.com/api/posts")
       .then((res) => {
         setDetails(res.data.data);
       })
@@ -121,7 +120,7 @@ function Home() {
 
   const showReply = () => {
     axios
-      .get("https://linkedin-lite-t1zn.onrender.com/api/posts/cmt")
+      .get("https://minilinked-in.onrender.com/api/posts/cmt")
       .then((res) => {
         setPostt(res.data);
       })

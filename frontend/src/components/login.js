@@ -18,7 +18,7 @@ export default function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/login",
+        "https://minilinked-in.onrender.com/api/auth/login",
         form
       );
       const user = res.data.user;

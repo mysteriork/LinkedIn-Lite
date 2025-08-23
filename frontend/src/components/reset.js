@@ -20,7 +20,7 @@ function Reset() {
     e.preventDefault();
     try {
       axios.post(
-        "https://linkedin-lite-t1zn.onrender.com/api/auth/reset",
+        "https://minilinked-in.onrender.com/api/auth/reset",
         newPass
       );
       alert("Password Reset done ... LOGIN again !!!");
