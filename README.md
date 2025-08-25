@@ -1,6 +1,6 @@
  ## WE ARE LIVE ON --  https://linkedin-lite-virid.vercel.app/
 
-# LinkedIn Lite 💼
+# MiniLinked-In 💼
 
 A simplified clone of LinkedIn built using the **MERN stack** (MongoDB, Express, React, Node.js).  
 It supports user authentication, profile management, posts feed, and basic social interactions — designed to demonstrate full-stack development skills with modern technologies.
@@ -50,6 +50,7 @@ PROFILE VIEW :
 License
 
 This project is open-source and available under the MIT License.
+
 
 
 
