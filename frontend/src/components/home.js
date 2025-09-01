@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 import company from "../components/images/lin1.png";
 import plus from "../components/images/plus.png";
 import send from "../components/images/send.png";
+import Bin from "../components/images/bin.png";
+import Back from "../components/images/back-button.png";
 import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
 
@@ -20,11 +22,13 @@ function Home() {
   const [loader, setLoader] = useState(false);
   const [replies, setReplies] = useState({});
   const [postt, setPostt] = useState([]);
+  const [searchClick, setSearchClick] = useState(false);
+  const [search, setSearch] = useState("");
 
   const [menuOpen, setMenuOpen] = useState(false);
 
   const logout = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   const handleReplyChange = (postId, value) => {
@@ -72,14 +76,11 @@ function Home() {
         showData();
         showReply();
       } else {
-        await axios.post(
-          "https://minilinked-in.onrender.com/api/posts/user",
-          {
-            user: name.firstname,
-            text: text,
-            userId: name._id,
-          }
-        );
+        await axios.post("https://minilinked-in.onrender.com/api/posts/user", {
+          user: name.firstname,
+          text: text,
+          userId: name._id,
+        });
         alert("Post has Created !!!");
         setText("");
         setImage(null);
@@ -97,9 +98,7 @@ function Home() {
     const confirm = window.confirm("Are you sure , you want to delete this ?");
     if (confirm) {
       axios
-        .delete(
-          `https://minilinked-in.onrender.com/api/posts/delete/${id}`
-        )
+        .delete(`https://minilinked-in.onrender.com/api/posts/delete/${id}`)
         .then((result) => {
           alert("Post deleted !!!");
           showData();
@@ -110,6 +109,8 @@ function Home() {
     }
   };
   const showData = () => {
+    setSearchClick(false);
+    setSearch("");
     axios
       .get("https://minilinked-in.onrender.com/api/posts")
       .then((res) => {
@@ -125,6 +126,19 @@ function Home() {
         setPostt(res.data);
       })
       .catch((err) => console.log("replies not fetched", err.message));
+  };
+
+  const searchIT = () => {
+    if (!search.trim()) {
+      showData(); // reset to full list
+      return;
+    }
+    setSearchClick(true);
+    const searchData = details.filter((v) =>
+      v.user.toLowerCase().includes(search.toLowerCase())
+    );
+    setDetails(searchData);
+    setSearch("")
   };
 
   useEffect(() => {
@@ -207,13 +221,32 @@ function Home() {
       </nav>
 
       <div className="contain container1">
+        <div className="searchSection">
+          <input
+            type="text"
+            name="search"
+            autoComplete="off"
+            placeholder="search here . . ."
+            id="searchBar"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={searchIT} className="searchBtn">
+            search
+          </button>
+        </div>
+        {searchClick && (
+          <button className="backBtn" onClick={showData}>
+            <img src={Back} alt="returnBtn" className="backBtn1" />
+            Back
+          </button>
+        )}
         <form className="listForm flex container1" onSubmit={submitForm}>
           <section className="homePost">
             <input
               className="homePostt"
               type="text"
               name="text"
-              placeholder="Write a Post . . ."
+              placeholder="What's in your Mind . . ."
               autoComplete="off"
               value={text}
               onChange={(e) => {
@@ -243,12 +276,11 @@ function Home() {
           <br />
         </form>
         <div style={{ marginInline: "auto" }}> {loader && <Loader />}</div>
-
         <div className="answersMain">
           <div className="answers">
             {details.map((value) => (
               <div className="container2" key={value._id}>
-                <div>
+                <div id="hero">
                   <div style={{ marginBottom: "5px" }}>
                     <a
                       style={{ cursor: "pointer" }}
@@ -270,13 +302,22 @@ function Home() {
                       />
                     </div>
                   )}
-                  <h5 style={{ fontSize: "small" }}>
+                  <h5 className="dateFont">
                     {new Date(value.createdAt).toLocaleString()}
                   </h5>
                   <h5 className="replyInp" style={{ color: "goldenrod" }}>
                     comments
                   </h5>
-                  <div className="replybox">
+                  <div
+                    className="replybox"
+                    style={{
+                      borderBottom:
+                        postt.filter((reply) => reply.postId === value._id)
+                          .length >= 5
+                          ? ".2px solid lightgray"
+                          : "none",
+                    }}
+                  >
                     {postt &&
                       postt.length > 0 &&
                       postt.map(
@@ -290,7 +331,7 @@ function Home() {
                       )}
                   </div>
 
-                  <div>
+                  <div id="commentSection">
                     <input
                       autoComplete="off"
                       className="replyInp1"
@@ -316,9 +357,10 @@ function Home() {
                 {value.userId === name?._id && (
                   <button
                     className="deletebtn"
+                    title="Delete post"
                     onClick={() => deletepost(value._id)}
                   >
-                    delete post
+                    <img src={Bin} alt="deletePost" className="bin" />
                   </button>
                 )}
               </div>

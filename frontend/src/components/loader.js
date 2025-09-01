@@ -3,7 +3,7 @@ function Loader() {
   return (
     <>
       <div className="loader">
-        <h3 style={{ color: "black", fontSize: "medium" }}>
+        <h3 style={{ color: "green", fontSize: "medium" }}>
           Loading please wait ...
         </h3>
       </div>
