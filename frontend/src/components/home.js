@@ -138,7 +138,7 @@ function Home() {
       v.user.toLowerCase().includes(search.toLowerCase())
     );
     setDetails(searchData);
-    setSearch("")
+    setSearch("");
   };
 
   useEffect(() => {
@@ -226,7 +226,7 @@ function Home() {
             type="text"
             name="search"
             autoComplete="off"
-            placeholder="search here . . ."
+            placeholder="search username . . ."
             id="searchBar"
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -275,7 +275,10 @@ function Home() {
           </button>
           <br />
         </form>
-        <div style={{ marginInline: "auto" }}> {loader && <Loader />}</div>
+        <div style={{ marginInline: "auto", marginTop: "20px" }}>
+          {" "}
+          {loader && <Loader />}
+        </div>
         <div className="answersMain">
           <div className="answers">
             {details.map((value) => (

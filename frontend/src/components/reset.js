@@ -32,8 +32,8 @@ function Reset() {
   };
 
   return (
-    <div>
-      <form onSubmit={changePassword} className="reset flex container1">
+    <div id="reset">
+      <form onSubmit={changePassword} className="reset flex">
         <h1>Enter New Password</h1>
         <input
           name="newPword"

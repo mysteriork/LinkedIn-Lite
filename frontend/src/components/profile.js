@@ -32,7 +32,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="profile flex container1">
+      <div className="profile flex">
         {selectedUser === profilename && profile && (
           <div className="profilepic">
             <strong>

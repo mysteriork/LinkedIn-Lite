@@ -45,7 +45,7 @@ export default function Register() {
   };
 
   return (
-    <div className="signup container1 flex">
+    <div className="signup  flex">
       {" "}
       <form onSubmit={handleSubmit} className="signForm flex">
         <h1>Register Yourself First</h1>

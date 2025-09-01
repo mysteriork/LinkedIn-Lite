@@ -32,9 +32,9 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div id="login">
       {" "}
-      <form onSubmit={handleSubmit} className="login flex container1">
+      <form onSubmit={handleSubmit} className="login flex">
         <h1>Login</h1>
         <input
           name="username"
