@@ -351,12 +351,18 @@ li {
   box-shadow: 0 6px 10px -5px rgb(110, 110, 110);
 }
 
-.imgpost {
-  padding: 2px;
+.impPost1 {
+  margin: 10px 0;
   height: 300px;
   width: 400px;
 }
 
+.imgpost {
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 3px;
+  height: inherit;
+  width: inherit;
+}
 .profile {
   flex-direction: column;
 }
@@ -787,9 +793,14 @@ li {
   .profilepic p {
     font-size: medium;
   }
-  .imgpost {
+
+  .impPost1 {
     height: 150px;
     width: 200px;
+  }
+  .imgpost {
+    height: inherit;
+    width: inherit;
   }
 
   .dateFont {
@@ -814,11 +825,14 @@ li {
     font-size: small;
   }
   .replies {
-    font-size: x-small;
+    font-size: xx-small;
   }
   .plusimg {
     height: 50px;
     width: 50px;
+  }
+  .click{
+    font-size: x-large;
   }
   .file-upload {
     display: inline-block;

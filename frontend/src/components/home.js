@@ -31,6 +31,13 @@ function Home() {
     navigate("/");
   };
 
+  useEffect(() => {
+    if (name) {
+      showData();
+      showReply();
+    }
+  }, []);
+
   const handleReplyChange = (postId, value) => {
     setReplies((prev) => ({ ...prev, [postId]: value }));
   };
@@ -140,11 +147,6 @@ function Home() {
     setDetails(searchData);
     setSearch("");
   };
-
-  useEffect(() => {
-    showData();
-    showReply();
-  }, []);
 
   const profilePic = (namee) => {
     navigate("/profile", { state: { profilename: namee } });
@@ -284,7 +286,7 @@ function Home() {
             {details.map((value) => (
               <div className="container2" key={value._id}>
                 <div id="hero">
-                  <div style={{ marginBottom: "5px" }}>
+                  <div style={{ marginBottom: "10px" }}>
                     <a
                       style={{ cursor: "pointer" }}
                       className="click"
@@ -305,7 +307,7 @@ function Home() {
                       />
                     </div>
                   )}
-                  <h5 className="dateFont">
+                  <h5 className="dateFont" style={{ marginTop: "5px" }}>
                     {new Date(value.createdAt).toLocaleString()}
                   </h5>
                   <h5 className="replyInp" style={{ color: "goldenrod" }}>
