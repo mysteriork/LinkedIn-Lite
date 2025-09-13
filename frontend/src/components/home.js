@@ -352,7 +352,7 @@ function Home() {
                         src={send}
                         alt="replybtn"
                         className="replyBtn"
-                        onClick={() => sendReply(value._id)}
+                        onMouseDown={() => sendReply(value._id)}
                       />
                     </label>
                     <input style={{ display: "none" }} id="replyBtn" />
