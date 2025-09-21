@@ -304,6 +304,7 @@ function Home() {
                         src={value.image}
                         alt="imgPost"
                         className="imgpost"
+                        loading="lazy"
                       />
                     </div>
                   )}
