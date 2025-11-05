@@ -137,7 +137,7 @@ function Home() {
 
   const searchIT = () => {
     if (!search.trim()) {
-      showData(); // reset to full list
+      showData();
       return;
     }
     setSearchClick(true);
@@ -161,7 +161,7 @@ function Home() {
               color: "white",
               fontSize: "large",
               fontWeight: "600",
-              fontFamily: "calibri",
+              fontFamily: "Arial",
             }}
           >
             LinkedIn Lite
@@ -181,10 +181,10 @@ function Home() {
               style={{
                 fontSize: "medium",
                 color: "white",
-                fontFamily: "cursive",
+                fontFamily: "Arial",
               }}
             >
-              User Profile
+              USER PROFILE{" "}
             </strong>
             {name ? (
               <a className="bttn2" onClick={() => setMenuOpen((prev) => !prev)}>
