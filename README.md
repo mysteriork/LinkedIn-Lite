@@ -29,10 +29,11 @@ It supports user authentication, profile management, posts feed, and basic socia
 
 ## 📁 Folder Structure
 
-USER REGISTRATION :
+### 1. USER REGISTRATION :
 <img width="1862" height="1018" alt="image" src="https://github.com/user-attachments/assets/3946c2a5-cf51-4348-8d31-3dbe0f2d550a" />
+---
 
-2) 
+### 2. 
 <img width="1854" height="933" alt="image" src="https://github.com/user-attachments/assets/a2fe2613-870a-4412-9c6b-1a011382177a" />
 
 
@@ -51,6 +52,7 @@ PROFILE VIEW :
 License
 
 This project is open-source and available under the MIT License.
+
 
 
 
