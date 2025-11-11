@@ -1,4 +1,4 @@
- ## WE ARE LIVE ON --  https://linkedin-lite-virid.vercel.app/
+ ## 🌐 WE ARE LIVE ON 👉--  https://linkedin-lite-virid.vercel.app/
 
 # MiniLinked-In 💼
 
@@ -59,6 +59,7 @@ It supports user authentication, profile management, posts feed, and basic socia
 ### License 🪪
 
 ### This project is open-source and available under the MIT License.
+
 
 
 
