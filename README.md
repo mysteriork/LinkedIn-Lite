@@ -53,12 +53,14 @@ It supports user authentication, profile management, posts feed, and basic socia
 <img width="1856" height="932" alt="image" src="https://github.com/user-attachments/assets/dd961a85-575e-44b2-9318-d5bf8df5cb48" />
 
 ---
+## License 🪪
 
- ## ===> @Mysteriork --- RACHIT KUMAR 😎
+## ===> @Mysteriork --- RACHIT KUMAR 😎
 
-### License 🪪
+### 📧 callmerachit145@gmail.com
 
-### This project is open-source and available under the MIT License.
+This project is open-source and available under the MIT License.
+
 
 
 
