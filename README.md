@@ -29,29 +29,37 @@ It supports user authentication, profile management, posts feed, and basic socia
 
 ## 📁 Folder Structure
 
-### 1. USER REGISTRATION :
+### 1. USER REGISTRATION : 🚀
 <img width="1862" height="1018" alt="image" src="https://github.com/user-attachments/assets/3946c2a5-cf51-4348-8d31-3dbe0f2d550a" />
+
 ---
 
 ### 2. 
 <img width="1854" height="933" alt="image" src="https://github.com/user-attachments/assets/a2fe2613-870a-4412-9c6b-1a011382177a" />
 
+---
 
-USER LOGIN PAGE :
+### 3. USER LOGIN PAGE : 🟢
 <img width="1860" height="1022" alt="image" src="https://github.com/user-attachments/assets/af622fe9-76d1-4965-b777-284fdefd95d7" />
 
-USER INTERFACE HOME PAGE :
+---
+
+### 4. USER INTERFACE HOME PAGE : 🏠
 <img width="1920" height="4869" alt="image" src="https://github.com/user-attachments/assets/018d2128-33d7-42f5-824b-2ee00b09e905" />
 
-PROFILE VIEW :
+---
+
+### 5. PROFILE VIEW : 🧑‍💻
 <img width="1856" height="932" alt="image" src="https://github.com/user-attachments/assets/dd961a85-575e-44b2-9318-d5bf8df5cb48" />
 
+---
 
- @Mysteriork --- RACHIT KUMAR
+ ## ===> @Mysteriork --- RACHIT KUMAR 😎
 
-License
+### License 🪪
 
-This project is open-source and available under the MIT License.
+### This project is open-source and available under the MIT License.
+
 
 
 
