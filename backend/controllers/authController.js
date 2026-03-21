@@ -15,6 +15,9 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    if (!(username && password)) {
+      throw new Error(401, "username and password required !!! ");
+    }
     const user = await User.findOne({ username });
 
     if (
@@ -27,14 +30,32 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    res.json({
-      message: "Login successful",
-      user: {
-        _id: user._id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-      },
-    });
+    const AccessToken = await user.generateAccessToken();
+    const RefreshToken = await user.generateRefreshToken();
+
+    user.refreshToken = RefreshToken;
+    await user.save({ validateBeforeSave: false });
+
+    console.log("Token Generated");
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    res
+      .cookie("AccessToken", AccessToken, options)
+      .cookie("refreshtoken", RefreshToken, options)
+      .json({
+        message: "Login successful",
+        user: {
+          _id: user._id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          RefreshToken,
+          AccessToken,
+        },
+      });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -55,6 +76,8 @@ exports.reset = async (req, res) => {
     await user.save();
     res.status(200).json({ message: "New Password reset", data: password });
   } catch (error) {
-    res.status(500).json("Error in Reseting password");
+    console.log("error reseting password", error.message);
+
+    res.status(500).json("Error in Reseting password", error.message);
   }
 };

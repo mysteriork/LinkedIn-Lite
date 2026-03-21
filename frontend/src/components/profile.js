@@ -48,7 +48,7 @@ function Profile() {
               EMAIL :<p>{profile.email}</p>
             </strong>
             <strong>
-              Username :<p>{profile.username}</p>
+              USERNAME :<p>{profile.username}</p>
             </strong>
             <strong>
               BIO :<p>{profile.bio}</p>

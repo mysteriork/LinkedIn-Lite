@@ -24,8 +24,9 @@
 
 h1 {
   font-size: 2.3rem;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family:
+    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans",
+    Arial, sans-serif;
   color: var(--accent-color);
 }
 
@@ -55,18 +56,25 @@ a {
   font-size: medium;
   font-weight: 600;
 }
+
 .bttn2 {
-  height: 50px;
+  display: inline;
+  height: fit-content;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  font-size: large;
+  flex-wrap: wrap;
+}
+
+.bttn2-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 50px;
   width: 180px;
   background-color: rgb(240, 192, 47);
-  text-align: center;
-  color: black;
-  list-style: none;
-  padding-top: 10px;
-  letter-spacing: 1px;
   border-radius: 4px;
-  font-size: large;
-  font-weight: bolder;
 }
 .click {
   color: var(--primary-text-color);
@@ -94,15 +102,21 @@ a {
   width: 100vw;
   position: fixed;
   top: 0;
+  border-bottom: 3px ridge var(--accent-color);
   margin-bottom: 80px;
   justify-content: space-around;
   background-color: var(--accent-color);
   z-index: 9999;
 }
+
+.nav-article {
+  display: flex;
+  min-width: 500px;
+  justify-content: space-between;
+}
 .imagesection {
   height: 50px;
   width: 200px;
-  margin-left: 60px;
   display: flex;
   align-items: center;
 }
@@ -157,7 +171,8 @@ li {
   width: 450px;
   border-radius: 5px;
   font-size: medium;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   text-indent: 15px;
   color: black;
@@ -184,7 +199,8 @@ li {
   color: var(--accent-color);
   border-radius: 4px;
   font-size: medium;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 600;
 }
@@ -240,8 +256,8 @@ li {
   text-indent: 10px;
   letter-spacing: 2px;
   border: none;
-  font-size: large;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: x-large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: rgb(55, 55, 55);
   white-space: pre-wrap;
   overflow-wrap: break-word;
@@ -373,8 +389,7 @@ li {
 
 .profile {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   background-image: url("../src//components//images//bg1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -383,32 +398,36 @@ li {
 }
 
 .profilepic {
-  margin-inline: auto;
+  margin-top: 50px;
   border-radius: 8px;
-  background: #eeeeee84;
   padding: 30px 40px;
   box-shadow: 0 4px 15px rgba(128, 128, 128, 0.457);
-  width: 100%;
-  max-width: 500px;
+  width: 600px;
+  min-height: 500px;
+  backdrop-filter: blur(10px);
 }
 
-.profilepic strong {
+.profilepic > strong {
   font-family: Arial, Helvetica, sans-serif;
   display: block;
   font-size: 14px;
   color: rgb(90, 90, 90);
   padding: 10px;
   letter-spacing: 1px;
+  height: 100px;
 }
 
 .profilepic p {
-  font-size: large;
-  padding: 8px 0;
-  color: #0872a4;
+  font-size: medium;
+  padding: 10px;
+  color: var(--accent-color);
   font-weight: 600;
   text-transform: capitalize;
-  font-family: Arial, Helvetica, sans-serif;
-  border-bottom: 1px solid #eee;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  height: 40px;
+  text-align: center;
 }
 
 .profilepic p:last-child {
@@ -527,7 +546,8 @@ li {
 
 .signup {
   background-image: url("./components//images/bg.jpg");
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   flex-direction: column;
   justify-content: center;
 }
@@ -545,6 +565,8 @@ li {
   text-indent: 10px;
   border: 2px solid gray;
   border-radius: 2px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: var(--accent-color);
 }
 
 .signForm > input:focus {
@@ -560,8 +582,9 @@ li {
   height: 100px;
   width: 500px;
   text-indent: 10px;
+  padding: 10px;
   border-radius: 2px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   border: 2px solid gray;
 }
 
@@ -597,9 +620,12 @@ li {
   cursor: pointer;
 }
 
+/* LOGIN FORM  */
+
 #login {
   background-image: url("./components/images/bg.jpg");
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -620,6 +646,7 @@ li {
   text-indent: 10px;
   border: 2px solid gray;
   border-radius: 2px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .login > input:focus {
@@ -632,7 +659,8 @@ li {
 #reset {
   background-image: url("./components//images/bg.jpg");
   background-position: center;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
 }
 .reset {
   height: 600px;
@@ -753,6 +781,14 @@ li {
     padding: 10px 0;
     text-align: center;
   }
+
+  .nav-article {
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+    min-width: fit-content;
+  }
+
   .nav-ul {
     display: flex;
     flex-direction: column;
@@ -782,9 +818,9 @@ li {
     margin: 10px 0;
   }
 
-  .bttn2 {
+  .bttn2-div {
     height: 80px;
-    width: 100px;
+    width: 120px;
   }
   .answers {
     gap: 20px;

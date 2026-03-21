@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/login";
 import Register from "./components/register";
@@ -7,6 +7,7 @@ import Reset from "./components/reset";
 const Feed = lazy(() => import("./components/home"));
 const Profile = lazy(() => import("./components/profile"));
 function App() {
+
   return (
     <Router>
       <Suspense

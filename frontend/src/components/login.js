@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loader";
 import "../web.css";
+import { useAuth } from "../authContext";
 
 export default function Login() {
+  const { login } = useAuth();
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -19,13 +21,15 @@ export default function Login() {
     try {
       const res = await axios.post(
         "https://minilinked-in.onrender.com/api/auth/login",
-        form
+        form,
       );
       const user = res.data.user;
-      alert("login successfull"); 
-      navigate("/home", { state: { name: user } });
-    } catch {
+      alert("login successfull");
+      login(user);
+      navigate("/home");
+    } catch (err) {
       alert("Invalid login credentials");
+      console.log("Crashing at login", err.message);
     } finally {
       setLoading(false);
     }
@@ -57,7 +61,9 @@ export default function Login() {
         <button onClick={() => navigate("/")} className="btn4">
           Register
         </button>
-        <p className="resetBtn" onClick={() => navigate("/reset")}>Forgot password</p>
+        <p className="resetBtn" onClick={() => navigate("/reset")}>
+          Forgot password
+        </p>
         {loading && <Loader />}
       </form>
     </div>

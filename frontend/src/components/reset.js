@@ -21,13 +21,14 @@ function Reset() {
     try {
       axios.post(
         "https://minilinked-in.onrender.com/api/auth/reset",
-        newPass
+        newPass,{
+          withCredentials:true
+        }
       );
       alert("Password Reset done ... LOGIN again !!!");
       navigate("/login")
     } catch (error) {
-      alert("Error in reseting password");
-      navigate("/login")
+      alert("Error in reseting password",error.message);
     }
   };
 

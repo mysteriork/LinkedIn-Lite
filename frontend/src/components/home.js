@@ -1,8 +1,6 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../web.css";
-import { useLocation } from "react-router-dom";
 import company from "../components/images/lin1.png";
 import plus from "../components/images/plus.png";
 import send from "../components/images/send.png";
@@ -10,11 +8,11 @@ import Bin from "../components/images/bin.png";
 import Back from "../components/images/back-button.png";
 import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../authContext";
 
 function Home() {
+  const { userData: name, logout: logOut } = useAuth();
   const navigate = useNavigate();
-  const navData = useLocation();
-  const name = navData.state?.name;
 
   const [text, setText] = useState("");
   const [details, setDetails] = useState([]);
@@ -28,6 +26,7 @@ function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const logout = () => {
+    logOut();
     navigate("/");
   };
 
@@ -36,7 +35,7 @@ function Home() {
       showData();
       showReply();
     }
-  }, []);
+  }, [name?._id]);
 
   const handleReplyChange = (postId, value) => {
     setReplies((prev) => ({ ...prev, [postId]: value }));
@@ -47,10 +46,12 @@ function Home() {
     if (!replyText) return;
 
     try {
-      const reply = await axios.post(
-        "https://minilinked-in.onrender.com/api/posts/cmt",
-        { postId, userId: name._id, reply: replyText, name: name.firstname }
-      );
+      const reply = await axios.post("https://minilinked-in.onrender.com/api/posts/cmt", {
+        postId,
+        userId: name._id,
+        reply: replyText,
+        name: name.firstname,
+      });
       setReplies((prev) => ({ ...prev, [postId]: "" }));
       showReply();
     } catch (error) {
@@ -73,10 +74,7 @@ function Home() {
         formData.append("userId", name._id);
         formData.append("image", image);
 
-        await axios.post(
-          "https://minilinked-in.onrender.com/api/posts/user",
-          formData
-        );
+        await axios.post("https://minilinked-in.onrender.com/api/posts/user", formData);
         alert("Post has Created !!!");
         setText("");
         setImage(null);
@@ -142,7 +140,7 @@ function Home() {
     }
     setSearchClick(true);
     const searchData = details.filter((v) =>
-      v.user.toLowerCase().includes(search.toLowerCase())
+      v.user.toLowerCase().includes(search.toLowerCase()),
     );
     setDetails(searchData);
     setSearch("");
@@ -154,27 +152,29 @@ function Home() {
   return (
     <div>
       <nav className="navbar1 flex">
-        <a href="/home" className="imagesection">
-          <img src={company} className="nav-img" alt="/" />
-          <label
-            style={{
-              color: "white",
-              fontSize: "large",
-              fontWeight: "600",
-              fontFamily: "Arial",
+        <article className="nav-article">
+          <a href="/home" className="imagesection">
+            <img src={company} className="nav-img" alt="/" />
+            <label
+              style={{
+                color: "white",
+                fontSize: "large",
+                fontWeight: "600",
+                fontFamily: "Arial",
+              }}
+            >
+              LinkedIn Lite
+            </label>
+          </a>
+          <button
+            className="btn2"
+            onClick={() => {
+              navigate("/");
             }}
           >
-            LinkedIn Lite
-          </label>
-        </a>
-        <button
-          className="btn2"
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Sign up
-        </button>
+            Sign up
+          </button>
+        </article>
         <section className="links">
           <ul className="nav-ul flex">
             <strong
@@ -187,23 +187,28 @@ function Home() {
               USER PROFILE{" "}
             </strong>
             {name ? (
-              <a className="bttn2" onClick={() => setMenuOpen((prev) => !prev)}>
-                {`${name?.firstname} ${name?.lastname}`}
+              <div className="bttn2-div">
+                <a
+                  className="bttn2"
+                  onClick={() => setMenuOpen((prev) => !prev)}
+                >
+                  {`${name?.firstname} ${name?.lastname}`}
 
-                {menuOpen && (
-                  <div className="dropdown">
-                    <button
-                      className="drop-item"
-                      onClick={() => profilePic(name.firstname)}
-                    >
-                      Profile
-                    </button>
-                    <button className="drop-item" onClick={logout}>
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </a>
+                  {menuOpen && (
+                    <div className="dropdown">
+                      <button
+                        className="drop-item"
+                        onClick={() => profilePic(name.firstname)}
+                      >
+                        Profile
+                      </button>
+                      <button className="drop-item" onClick={logout}>
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </a>
+              </div>
             ) : (
               <div>
                 <li
@@ -333,7 +338,7 @@ function Home() {
                               <label className="replyTag">{`${valuee.name}:`}</label>
                               {valuee.reply}
                             </p>
-                          )
+                          ),
                       )}
                   </div>
 
