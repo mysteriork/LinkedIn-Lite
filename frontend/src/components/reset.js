@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../web.css"
+import "../web.css";
 
 function Reset() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [newPass, setNewPass] = useState({
     newPword: "",
     password: "",
@@ -16,19 +16,23 @@ function Reset() {
     });
   };
 
-  const changePassword = (e) => {
+  const changePassword = async (e) => {
     e.preventDefault();
+    const user = JSON.parse(localStorage.getItem("user"));
     try {
-      axios.post(
+      await axios.post(
         "https://minilinked-in.onrender.com/api/auth/reset",
-        newPass,{
-          withCredentials:true
-        }
+        newPass,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.AccessToken}`,
+          },
+        },
       );
       alert("Password Reset done ... LOGIN again !!!");
-      navigate("/login")
+      navigate("/login");
     } catch (error) {
-      alert("Error in reseting password",error.message);
+      alert("Error in reseting password", error.message);
     }
   };
 
@@ -55,7 +59,9 @@ function Reset() {
         <button type="submit" className="btn3">
           Reset
         </button>
-        <button onClick={()=>navigate("/login") } className="btn4">GO BACK</button>
+        <button onClick={() => navigate("/login")} className="btn4">
+          GO BACK
+        </button>
       </form>
     </div>
   );
