@@ -18,6 +18,8 @@ exports.verifyJwt = async (req, res, next) => {
     if (!matchedToken) {
       return res.status(401).json({ message: "User not found" })
     }
+    console.log("token matched");
+    
     req.user = matchedToken;
     next();
   } catch (error) {
