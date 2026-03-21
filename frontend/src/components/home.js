@@ -35,7 +35,7 @@ function Home() {
       showData();
       showReply();
     }
-  }, [name?._id]);
+  }, [name?._id, name]);
 
   const handleReplyChange = (postId, value) => {
     setReplies((prev) => ({ ...prev, [postId]: value }));
@@ -46,7 +46,7 @@ function Home() {
     if (!replyText) return;
 
     try {
-      const reply = await axios.post("https://minilinked-in.onrender.com/api/posts/cmt", {
+      await axios.post("https://minilinked-in.onrender.com/api/posts/cmt", {
         postId,
         userId: name._id,
         reply: replyText,
@@ -74,7 +74,10 @@ function Home() {
         formData.append("userId", name._id);
         formData.append("image", image);
 
-        await axios.post("https://minilinked-in.onrender.com/api/posts/user", formData);
+        await axios.post(
+          "https://minilinked-in.onrender.com/api/posts/user",
+          formData,
+        );
         alert("Post has Created !!!");
         setText("");
         setImage(null);
@@ -188,7 +191,7 @@ function Home() {
             </strong>
             {name ? (
               <div className="bttn2-div">
-                <a
+                <button
                   className="bttn2"
                   onClick={() => setMenuOpen((prev) => !prev)}
                 >
@@ -207,7 +210,7 @@ function Home() {
                       </button>
                     </div>
                   )}
-                </a>
+                </button>
               </div>
             ) : (
               <div>
@@ -292,15 +295,11 @@ function Home() {
               <div className="container2" key={value._id}>
                 <div id="hero">
                   <div style={{ marginBottom: "10px" }}>
-                    <a
+                    <button
                       style={{ cursor: "pointer" }}
                       className="click"
-                      onClick={() => {
-                        profilePic(value.user);
-                      }}
-                    >
-                      {`@${value.user}`}
-                    </a>
+                      onClick={() => profilePic(value.user)}
+                    >{`@${value.user}`}</button>
                   </div>
                   <h2>{value.post}</h2>
                   {value.image && (
