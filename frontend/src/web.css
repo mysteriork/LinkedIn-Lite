@@ -58,12 +58,13 @@ a {
 }
 
 .bttn2 {
-  display: inline;
-  height: fit-content;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-size: large;
   flex-wrap: wrap;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .bttn2-div {
@@ -747,6 +748,10 @@ li {
     width: 100%;
   }
 
+  .nav-article{
+    align-items: center;
+  }
+
   .signup {
     background-image: url("./components//images/bg.jpg");
     background-size: cover;
@@ -777,21 +782,26 @@ li {
   }
 
   .navbar1 {
-    height: auto;
+    margin-bottom: 0;
+    position: relative;
+    height: 200px;
     padding: 10px 0;
     text-align: center;
   }
 
   .nav-article {
     flex-direction: column;
-    justify-content: center;
-    height: fit-content;
+    justify-content: space-evenly;
+    height: inherit;
     min-width: fit-content;
   }
 
   .nav-ul {
     display: flex;
     flex-direction: column;
+    height: inherit;
+    gap: 4px;
+    
   }
 
   .imagesection {
@@ -820,7 +830,7 @@ li {
 
   .bttn2-div {
     height: 80px;
-    width: 120px;
+    width: 150px;
   }
   .answers {
     gap: 20px;
@@ -898,7 +908,7 @@ li {
   }
 
   .searchSection {
-    margin-top: 120px;
+    margin-top: 0;
     width: 100vw;
     position: relative;
   }
