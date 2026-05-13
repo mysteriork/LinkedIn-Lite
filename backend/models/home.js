@@ -19,7 +19,9 @@ const database = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+database.index({ createdAt: -1 });
 
 module.exports = mongoose.model("profilePost", database);

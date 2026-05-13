@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import "../web.css";
 import company from "../components/images/lin1.png";
 import plus from "../components/images/plus.png";
 import send from "../components/images/send.png";
 import Bin from "../components/images/bin.png";
-import Back from "../components/images/back-button.png";
 import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../authContext";
@@ -20,10 +19,12 @@ function Home() {
   const [loader, setLoader] = useState(false);
   const [replies, setReplies] = useState({});
   const [postt, setPostt] = useState([]);
-  const [searchClick, setSearchClick] = useState(false);
   const [search, setSearch] = useState("");
+  const [debounce, setDebounce] = useState(null);
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const logout = () => {
     logOut();
@@ -32,10 +33,10 @@ function Home() {
 
   useEffect(() => {
     if (name) {
-      showData();
+      showData(page, debounce);
       showReply();
     }
-  }, [name?._id, name]);
+  }, [name?._id, name, page, debounce]);
 
   const handleReplyChange = (postId, value) => {
     setReplies((prev) => ({ ...prev, [postId]: value }));
@@ -52,6 +53,7 @@ function Home() {
         reply: replyText,
         name: name.firstname,
       });
+
       setReplies((prev) => ({ ...prev, [postId]: "" }));
       showReply();
     } catch (error) {
@@ -63,6 +65,7 @@ function Home() {
     const file = e.target.files[0];
     if (file) setImage(file);
   };
+
   const submitForm = async (e) => {
     e.preventDefault();
     setLoader(true);
@@ -78,10 +81,11 @@ function Home() {
           "https://minilinked-in.onrender.com/api/posts/user",
           formData,
         );
+
         alert("Post has Created !!!");
         setText("");
         setImage(null);
-        showData();
+        showData(page, debounce);
         showReply();
       } else {
         await axios.post("https://minilinked-in.onrender.com/api/posts/user", {
@@ -89,10 +93,11 @@ function Home() {
           text: text,
           userId: name._id,
         });
+
         alert("Post has Created !!!");
         setText("");
         setImage(null);
-        showData();
+        showData(page, debounce);
         showReply();
       }
     } catch (error) {
@@ -102,56 +107,83 @@ function Home() {
     }
   };
 
-  const deletepost = (id) => {
+  const deletepost = async (id) => {
     const confirm = window.confirm("Are you sure , you want to delete this ?");
     if (confirm) {
-      axios
-        .delete(`https://minilinked-in.onrender.com/api/posts/delete/${id}`)
-        .then((result) => {
-          alert("Post deleted !!!");
-          showData();
+      try {
+        await axios
+          .delete(`https://minilinked-in.onrender.com/api/posts/delete/${id}`)
+          .then((result) => {
+            alert("Post deleted !!!");
+            showData(page, debounce);
+          })
+          .catch((err) => {
+            alert("Error Deleting Post !");
+          });
+      } catch (error) {
+        console.log("error deleting post", error.message);
+      }
+    }
+  };
+
+  const showData = async (pageNumber = 1, searchValue = "") => {
+    try {
+      await axios
+        .get(
+          `https://minilinked-in.onrender.com/api/postspage=${pageNumber}&search=${searchValue}`,
+        )
+        .then((res) => {
+          setDetails(res.data.data);
+          setPage(res.data.currentPage);
+          setTotalPages(res.data.totalPages);
         })
-        .catch((err) => {
-          alert("Error Deleting Post !");
-        });
+        .catch((err) => console.log("data not fetched", err.message));
+    } catch (error) {
+      console.log("error fetching data", error.message);
     }
   };
-  const showData = () => {
-    setSearchClick(false);
-    setSearch("");
-    axios
-      .get("https://minilinked-in.onrender.com/api/posts")
-      .then((res) => {
-        setDetails(res.data.data);
-      })
-      .catch((err) => console.log("data not fetched", err.message));
-  };
 
-  const showReply = () => {
-    axios
-      .get("https://minilinked-in.onrender.com/api/posts/cmt")
-      .then((res) => {
-        setPostt(res.data);
-      })
-      .catch((err) => console.log("replies not fetched", err.message));
-  };
-
-  const searchIT = () => {
-    if (!search.trim()) {
-      showData();
-      return;
+  const showReply = async () => {
+    try {
+      await axios
+        .get(
+          "https://minilinked-in.onrender.com/api/posts/cmt"
+          
+        )
+        .then((res) => {
+          setPostt(res.data);
+        })
+        .catch((err) => console.log("replies not fetched", err.message));
+    } catch (error) {
+      console.log("error fetching replies", error.message);
     }
-    setSearchClick(true);
-    const searchData = details.filter((v) =>
-      v.user.toLowerCase().includes(search.toLowerCase()),
-    );
-    setDetails(searchData);
-    setSearch("");
   };
 
   const profilePic = (namee) => {
     navigate("/profile", { state: { profilename: namee } });
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebounce(search);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debounce]);
+
+  const groupReplies = useMemo(() => {
+    return postt.reduce((acc, reply) => {
+      if (!acc[reply.postId]) {
+        acc[reply.postId] = [];
+      }
+      acc[reply.postId].push(reply);
+      return acc;
+    }, {});
+  }, [postt]);
+
   return (
     <div>
       <nav className="navbar1 flex">
@@ -166,7 +198,7 @@ function Home() {
                 fontFamily: "Arial",
               }}
             >
-              LinkedIn Lite
+              <strong>LinkedIn</strong> lite
             </label>
           </a>
           <button
@@ -186,9 +218,7 @@ function Home() {
                 color: "white",
                 fontFamily: "Arial",
               }}
-            >
-              USER PROFILE{" "}
-            </strong>
+            ></strong>
             {name ? (
               <div className="bttn2-div">
                 <button
@@ -240,16 +270,9 @@ function Home() {
             id="searchBar"
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button onClick={searchIT} className="searchBtn">
-            search
-          </button>
+          <button className="searchBtn">search</button>
         </div>
-        {searchClick && (
-          <button className="backBtn" onClick={showData}>
-            <img src={Back} alt="returnBtn" className="backBtn1" />
-            Back
-          </button>
-        )}
+
         <form className="listForm flex container1" onSubmit={submitForm}>
           <section className="homePost">
             <input
@@ -294,7 +317,7 @@ function Home() {
             {details.map((value) => (
               <div className="container2" key={value._id}>
                 <div id="hero">
-                  <div style={{ marginBottom: "10px" }}>
+                  <div style={{ marginBottom: "20px" }}>
                     <button
                       style={{ cursor: "pointer" }}
                       className="click"
@@ -322,23 +345,19 @@ function Home() {
                     className="replybox"
                     style={{
                       borderBottom:
-                        postt.filter((reply) => reply.postId === value._id)
-                          .length >= 5
+                        groupReplies[value._id]?.length >= 5
                           ? ".2px solid lightgray"
                           : "none",
                     }}
                   >
                     {postt &&
                       postt.length > 0 &&
-                      postt.map(
-                        (valuee) =>
-                          value._id === valuee.postId && (
-                            <p className="replies" key={valuee._id}>
-                              <label className="replyTag">{`${valuee.name}:`}</label>
-                              {valuee.reply}
-                            </p>
-                          ),
-                      )}
+                      groupReplies[value._id]?.map((valuee) => (
+                        <p className="replies" key={valuee._id}>
+                          <label className="replyTag">{`${valuee.name}:`}</label>
+                          {valuee.reply}
+                        </p>
+                      ))}
                   </div>
 
                   <div id="commentSection">
@@ -377,7 +396,46 @@ function Home() {
             ))}
           </div>
         </div>
+        <div className="pagination">
+          <button
+            className="btnP"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => prev - 1)}
+          >
+            Prev
+          </button>
+
+          <span>
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            className="btnP"
+            disabled={page === totalPages}
+            onClick={() => setPage((prev) => prev + 1)}
+          >
+            Next
+          </button>
+        </div>
       </div>
+      <footer className="footer">
+        <div className="footer-container">
+          <div className="footer-logo">
+            <h3>LinkedIn Lite</h3>
+            <p>a clone to understand the working of LinkedIn</p>
+          </div>
+
+          <div className="footer-links">
+            <a href="/home">Home</a>
+            <a>Profile</a>
+            <a href="/">Login</a>
+          </div>
+
+          <div className="footer-copy">
+            <p>© 2026 LinkedIn Lite. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

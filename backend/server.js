@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const app = express();
 app.use(
   cors({
-    origin: "https://linkedin-lite-virid.vercel.app",
+    origin: "*",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   }),

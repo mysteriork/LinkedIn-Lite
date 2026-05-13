@@ -27,7 +27,6 @@ exports.getProfile = async (req, res) => {
 };
 
 exports.reply = async (req, res) => {
-
   try {
     const reply = new Reply(req.body);
     await reply.save();
@@ -48,10 +47,42 @@ exports.getReply = async (req, res) => {
 
 exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort({createdAt:-1});
-    res.json({ message: "Fetched posts", data: posts });
+    const page = Number(req.query.page) || 1;
+
+    const limit = 5;
+
+    const skip = (page - 1) * limit;
+
+    const search = req.query.search || "";
+
+    const query = search
+      ? {
+          user: {
+            $regex: search,
+            $options: "i",
+          },
+        }
+      : {};
+
+    const posts = await Post.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const total = await Post.countDocuments(query);
+
+    return res.status(200).json({
+      message: "Fetched posts",
+      data: posts,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+      total,
+    });
   } catch (err) {
-    res.status(400).json({ message: "Error fetching posts" });
+    return res
+      .status(400)
+      .json({ message: "Error fetching posts", error: err.message });
   }
 };
 
