@@ -52,7 +52,8 @@ The platform includes secure authentication, profile management, post creation w
 ---
 
 3) USER INTERFACE HOME PAGE :
-<img width="1532" height="4833" alt="cvuJYVLk7E" src="https://github.com/user-attachments/assets/712504d1-549a-49f5-ab6f-031440337ea0" />
+<img width="1723" height="4833" alt="XkTZ0NEWHd" src="https://github.com/user-attachments/assets/8d36240f-e661-41c2-8b89-5b07547584f0" />
+---
 <img width="1725" height="4100" alt="MrA2N6Pr96" src="https://github.com/user-attachments/assets/8b28f187-09dd-43d0-8b12-414d5625d4ea" />
 
 ---
