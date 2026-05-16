@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "./loader";
 import "../web.css";
-import { useAuth } from "../authContext";
+import { useAuth } from "../useAuth";
 
 export default function Login() {
   const { login } = useAuth();

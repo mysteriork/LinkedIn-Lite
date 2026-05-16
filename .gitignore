@@ -8,7 +8,7 @@
 backend/.env
 .env
 backend/node_modules
-frontend/node_modules
+user_interface/node_modules
 
 # testing
 /coverage

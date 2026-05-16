@@ -1,6 +1,6 @@
-import { useContext, createContext, useState } from "react";
+import { createContext, useState } from "react";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [userData, setUserData] = useState(() => {
@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
 
   const login = (user) => {
     setUserData(user);
-
+ 
     localStorage.setItem("user", JSON.stringify(user));
   };
 
@@ -24,8 +24,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext); // SMART WAY TO REDUCE 2 IMPORTS AT EACH COMPONENT TO USE VALUES !!!!
 }

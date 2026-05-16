@@ -7,7 +7,6 @@ import Reset from "./components/reset";
 const Feed = lazy(() => import("./components/home"));
 const Profile = lazy(() => import("./components/profile"));
 function App() {
-
   return (
     <Router>
       <Suspense

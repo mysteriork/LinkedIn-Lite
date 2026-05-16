@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import "../web.css";
-import company from "../components/images/lin1.png";
-import plus from "../components/images/plus.png";
-import send from "../components/images/send.png";
-import Bin from "../components/images/bin.png";
+import company from "../assets/lin1.png";
+import plus from "../assets/plus.png";
+import send from "../assets/send.png";
+import Bin from "../assets/bin.png";
 import Loader from "./loader";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../authContext";
+import { useAuth } from "../useAuth";
 
 function Home() {
   const { userData: name, logout: logOut } = useAuth();
@@ -130,7 +130,7 @@ function Home() {
     try {
       await axios
         .get(
-          `https://minilinked-in.onrender.com/api/postspage=${pageNumber}&search=${searchValue}`,
+          `https://minilinked-in.onrender.com/api/posts?page=${pageNumber}&search=${searchValue}`,
         )
         .then((res) => {
           setDetails(res.data.data);
@@ -146,10 +146,7 @@ function Home() {
   const showReply = async () => {
     try {
       await axios
-        .get(
-          "https://minilinked-in.onrender.com/api/posts/cmt"
-          
-        )
+        .get("https://minilinked-in.onrender.com/api/posts/cmt")
         .then((res) => {
           setPostt(res.data);
         })
@@ -314,86 +311,90 @@ function Home() {
         </div>
         <div className="answersMain">
           <div className="answers">
-            {details.map((value) => (
-              <div className="container2" key={value._id}>
-                <div id="hero">
-                  <div style={{ marginBottom: "20px" }}>
-                    <button
-                      style={{ cursor: "pointer" }}
-                      className="click"
-                      onClick={() => profilePic(value.user)}
-                    >{`@${value.user}`}</button>
-                  </div>
-                  <h2>{value.post}</h2>
-                  {value.image && (
-                    <div className="impPost1">
-                      <img
-                        src={value.image}
-                        alt="imgPost"
-                        className="imgpost"
-                        loading="lazy"
-                      />
+            {!details.length ? (
+              <Loader />
+            ) : (
+              details.map((value) => (
+                <div className="container2" key={value._id}>
+                  <div id="hero">
+                    <div style={{ marginBottom: "20px" }}>
+                      <button
+                        style={{ cursor: "pointer" }}
+                        className="click"
+                        onClick={() => profilePic(value.user)}
+                      >{`@${value.user}`}</button>
                     </div>
-                  )}
-                  <h5 className="dateFont" style={{ marginTop: "5px" }}>
-                    {new Date(value.createdAt).toLocaleString()}
-                  </h5>
-                  <h5 className="replyInp" style={{ color: "goldenrod" }}>
-                    comments
-                  </h5>
-                  <div
-                    className="replybox"
-                    style={{
-                      borderBottom:
-                        groupReplies[value._id]?.length >= 5
-                          ? ".2px solid lightgray"
-                          : "none",
-                    }}
-                  >
-                    {postt &&
-                      postt.length > 0 &&
-                      groupReplies[value._id]?.map((valuee) => (
-                        <p className="replies" key={valuee._id}>
-                          <label className="replyTag">{`${valuee.name}:`}</label>
-                          {valuee.reply}
-                        </p>
-                      ))}
-                  </div>
+                    <h2>{value.post}</h2>
+                    {value.image && (
+                      <div className="impPost1">
+                        <img
+                          src={value.image}
+                          alt="imgPost"
+                          className="imgpost"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <h5 className="dateFont" style={{ marginTop: "5px" }}>
+                      {new Date(value.createdAt).toLocaleString()}
+                    </h5>
+                    <h5 className="replyInp" style={{ color: "goldenrod" }}>
+                      comments
+                    </h5>
+                    <div
+                      className="replybox"
+                      style={{
+                        borderBottom:
+                          groupReplies[value._id]?.length >= 5
+                            ? ".2px solid lightgray"
+                            : "none",
+                      }}
+                    >
+                      {postt &&
+                        postt.length > 0 &&
+                        groupReplies[value._id]?.map((valuee) => (
+                          <p className="replies" key={valuee._id}>
+                            <label className="replyTag">{`${valuee.name}:`}</label>
+                            {valuee.reply}
+                          </p>
+                        ))}
+                    </div>
 
-                  <div id="commentSection">
-                    <input
-                      autoComplete="off"
-                      className="replyInp1"
-                      type="text"
-                      placeholder="write a comment ..."
-                      onChange={(e) =>
-                        handleReplyChange(value._id, e.target.value)
-                      }
-                      value={replies[value._id] || ""}
-                    />
-                    <label htmlFor="replyBtn">
-                      <img
-                        src={send}
-                        alt="replybtn"
-                        className="replyBtn"
-                        onMouseDown={() => sendReply(value._id)}
+                    <div id="commentSection">
+                      <input
+                        autoComplete="off"
+                        className="replyInp1"
+                        type="text"
+                        placeholder="write a comment ..."
+                        onChange={(e) =>
+                          handleReplyChange(value._id, e.target.value)
+                        }
+                        value={replies[value._id] || ""}
                       />
-                    </label>
-                    <input style={{ display: "none" }} id="replyBtn" />
+                      <label htmlFor="replyBtn">
+                        <img
+                          src={send}
+                          alt="replybtn"
+                          className="replyBtn"
+                          onMouseDown={() => sendReply(value._id)}
+                        />
+                      </label>
+                      <input style={{ display: "none" }} id="replyBtn" />
+                    </div>
                   </div>
-                </div>
 
-                {value.userId === name?._id && (
-                  <button
-                    className="deletebtn"
-                    title="Delete post"
-                    onClick={() => deletepost(value._id)}
-                  >
-                    <img src={Bin} alt="deletePost" className="bin" />
-                  </button>
-                )}
-              </div>
-            ))}
+                  {value.userId === name?._id && (
+                    <button
+                      className="deletebtn"
+                      title="Delete post"
+                      onClick={() => deletepost(value._id)}
+                    >
+                      <img src={Bin} alt="deletePost" className="bin" />
+                    </button>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="pagination">
